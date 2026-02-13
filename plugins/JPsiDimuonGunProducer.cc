@@ -53,9 +53,9 @@ JPsiDimuonGunProducer::JPsiDimuonGunProducer(const edm::ParameterSet& pset)
       maxEta_(pset.getParameter<double>("MaxEta")),
       minPhi_(pset.getParameter<double>("MinPhi")),
       maxPhi_(pset.getParameter<double>("MaxPhi")),
-      vx_(pset.getParameter<double>("Vx")),
-      vy_(pset.getParameter<double>("Vy")),
-      vz_(pset.getParameter<double>("Vz")),
+      //vx_(pset.getParameter<double>("Vx")),
+      //vy_(pset.getParameter<double>("Vy")),
+      //vz_(pset.getParameter<double>("Vz")),
       jpsiId_(pset.getParameter<int>("JPsiPdgId")),
       muMinusId_(pset.getParameter<int>("MuMinusPdgId")),
       muPlusId_(pset.getParameter<int>("MuPlusPdgId")),
@@ -96,7 +96,13 @@ void JPsiDimuonGunProducer::produce(edm::StreamID sid, edm::Event& e, const edm:
   genEvent->set_event_number(e.id().event());
   genEvent->set_signal_process_id(20);
 
-  const double time = std::sqrt(vx_ * vx_ + vy_ * vy_ + vz_ * vz_);
+  const double R = 150.;
+  const double vx_ = R * std::cos(phi);
+  const double vy_ = R * std::sin(phi);
+  const double vz_ = 0.;
+
+  //const double time = std::sqrt(vx_ * vx_ + vy_ * vy_ + vz_ * vz_);
+  const double time = 0.; //?
 
   // Production vertex
   auto* vProd = new HepMC::GenVertex(HepMC::FourVector(vx_, vy_, vz_, time));
@@ -136,16 +142,16 @@ void JPsiDimuonGunProducer::produce(edm::StreamID sid, edm::Event& e, const edm:
 
 void JPsiDimuonGunProducer::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
   edm::ParameterSetDescription desc;
-  desc.add<double>("MinPt", 20.0);
-  desc.add<double>("MaxPt", 100.0);
-  desc.add<double>("MinEta", -2.4);
-  desc.add<double>("MaxEta", 2.4);
+  desc.add<double>("MinPt", 99.9);
+  desc.add<double>("MaxPt", 100.1);
+  desc.add<double>("MinEta", -0.01);
+  desc.add<double>("MaxEta", 0.01);
   desc.add<double>("MinPhi", -M_PI);
   desc.add<double>("MaxPhi", M_PI);
 
-  desc.add<double>("Vx", 0.0);
-  desc.add<double>("Vy", 0.0);
-  desc.add<double>("Vz", 0.0);
+  //desc.add<double>("Vx", 0.0);
+  //desc.add<double>("Vy", 0.0);
+  //desc.add<double>("Vz", 0.0);
 
   desc.add<int>("JPsiPdgId", 443);
   desc.add<int>("MuMinusPdgId", 13);
