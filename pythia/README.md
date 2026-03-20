@@ -21,10 +21,17 @@ cmsRun dimuon_xsec.py
 - `Beams:frameType = 2` : fixed-target configurations
 - [heavy collision](https://pythia.org/latest-manual/HeavyIons.html)
   - The default heavy ion model(Angantyr) stacks parton level events, according to individual nucleon-nucleon
+  - `HeavyIon:mode = 2` forces to turn on heavy ion collision mode
 sub-collisions, on top of each other.
 
 ## process
-- SoftQCD
+- [SoftQCD](https://pythia.org/latest-manual/QCDSoftProcesses.html)
+  - nonDiffractive: The dominant process.
+  - elastic
+  - singleDiffractive
+  - doubleDiffractive
+  - centralDiffractive
+  - inelastic
 
 - gammaShower
 
